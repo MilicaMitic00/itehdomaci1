@@ -1,11 +1,12 @@
 <?php
 
-require "../model.php";
+require "../kasting.php";
 require '../DBBroker.php';
 
 $broker=DBBroker::getBroker();
 
-    $resultSet = Model::getAll($broker);
+if(isset($_GET['id'])){
+    $resultSet = Kasting::getAllByModel($_GET['id'], $broker);
     $response=[];
 
     if(!$resultSet){
@@ -15,9 +16,10 @@ $broker=DBBroker::getBroker();
     else{
     $response['status']=1;
         while($row=$resultSet->fetch_object()){
-            $response['modeli'][]=$row;
+            $response['kastinzi'][]=$row;
         }
     }
     echo json_encode($response);
+}
 
 ?>
